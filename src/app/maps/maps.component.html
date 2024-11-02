@@ -1,2 +1,31 @@
-<button (click)="showMap()">Mostrar mi ubicación</button>
-<div #mapContainer id="map"></div>
+<div class="container">
+  <div class="card">
+    <h3>Ubicaciones de Mapa</h3>
+    <div class="input-group">
+      <label for="pickup">Punto de recogida:</label>
+      <input id="pickup" type="text" [(ngModel)]="pickupAddress" (input)="onPickupInput()" placeholder="INGRESE LA UBICACION">
+      <ul *ngIf="pickupSuggestions.length > 0" class="suggestions">
+        <li *ngFor="let suggestion of pickupSuggestions" (click)="selectPickupSuggestion(suggestion)">
+          {{ suggestion.display_name }}
+        </li>
+      </ul>
+    </div>
+    <div class="input-group">
+      <label for="destination">Punto de destino:</label>
+      <input id="destination" type="text" [(ngModel)]="destinationAddress" (input)="onDestinationInput()" placeholder="INGRESE LA UBICACION">
+      <ul *ngIf="destinationSuggestions.length > 0" class="suggestions">
+        <li *ngFor="let suggestion of destinationSuggestions" (click)="selectDestinationSuggestion(suggestion)">
+          {{ suggestion.display_name }}
+        </li>
+      </ul>
+    </div>
+    <div class="button-group">
+      <button class="btn primary" (click)="updateMarkers()">Actualizar Puntos</button>
+      <button class="btn secondary" (click)="showMap()">Mostrar mi ubicación</button>
+    </div>
+    <div class="distance-display">
+      <p *ngIf="distance !== null">Distancia: {{ distance | number: '1.0-2' }} metros</p>
+    </div>
+  </div>
+  <div #mapContainer id="map"></div>
+</div>
